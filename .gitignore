@@ -1,0 +1,15 @@
+# IntelliJ configuration settings
+.idea/
+
+# Python files
+__pycache__/
+
+# Python virtual environment files
+env/
+
+# Random MacOS files
+.DS_Store
+
+# Data files
+model_weights/
+
