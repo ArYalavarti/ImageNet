@@ -12,4 +12,4 @@ env/
 
 # Data files
 model_weights/
-
+neural_net/model.py
