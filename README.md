@@ -1,2 +1,2 @@
-# MNIST-Neural-Net
+# ImageNet
 Single layer handwriting digit recognition neural network
