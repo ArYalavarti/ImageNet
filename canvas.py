@@ -8,16 +8,18 @@ import numpy as np
 
 def plot_mnist_image(img):
     pixels = np.array(img, dtype='float32')
-    pixels = pixels.reshape((28, 28))
+    pixels = pixels.reshape((IMAGE_SIZE, IMAGE_SIZE))
 
     plt.imshow(pixels, cmap='Blues')
     plt.show()
 
 
-def predict_image(image_data):
-    image_resized = np.flip(np.rot90(resize(image_data, (28, 28))), axis=0)
+def predict_image(image_data, network):
+    image_resized = np.flip(np.rot90(resize(image_data, (IMAGE_SIZE, IMAGE_SIZE))), axis=0)
     plot_mnist_image(image_resized)
-    return 1
+
+    probabilities = network.call(image_resized.reshape((1, IMAGE_SIZE * IMAGE_SIZE)))
+    return np.argmax(probabilities)
 
 
 def is_in_range(x, y):
@@ -56,11 +58,14 @@ def listen(window, canvas, network):
             image_data[x+offset][j] = 255 / offset
 
     def process_image(event):
-        predicted_val = predict_image(image_data)
+        predicted_val = predict_image(image_data, network)
         image_data.fill(0)
         canvas.delete("all")
+        v.set(predicted_val)
 
     image_data = np.zeros((CANVAS_WIDTH, CANVAS_HEIGHT))
+    v = StringVar()
+    Label(window, textvariable=v, text="Lato", fg="grey", font=("Lato", 30)).pack()
 
     window.bind('<B1-Motion>', mouse_move)
     window.bind('<Return>', process_image)
