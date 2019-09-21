@@ -1,17 +1,23 @@
 from neural_net import model
-from data_processing import process
-from canvas import init_canvas, listen
+import data_processing as dp
+from util.constants import *
+from matplotlib import pyplot as plt
+from util.image_util import plot_mnist_image
+import sys
+from PIL import Image
+
+import numpy as np
 
 
-def main():
-    cached_weights = process.read_weights_from_file("model_weights/weights.txt")
-    cached_bias = process.read_weights_from_file("model_weights/bias.txt")
+def main(argv):
+    cached_weights = dp.read_weights_from_file("model_weights/weights.txt")
+    cached_bias = dp.read_weights_from_file("model_weights/bias.txt")
     network = model.SingleLayerModel(cached_weights, cached_bias)
 
-    window, canvas = init_canvas()
-    listen(window, canvas, network)
+    im = dp.process_image(Image.open(argv[1]))
+    plot_mnist_image(im)
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv)
 
