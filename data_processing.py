@@ -3,8 +3,8 @@ from resizeimage import resizeimage
 from util.image_util import *
 
 
-def write_array_to_file(weights: np.ndarray, filename: str):
-    np.savetxt(filename, weights)
+def write_array_to_file(weights: np.ndarray, filename: str, fmt: str):
+    np.savetxt(filename, weights, fmt=fmt)
 
 
 def read_weights_from_file(weights_input_path: str):

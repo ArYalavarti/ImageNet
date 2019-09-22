@@ -18,19 +18,19 @@ def validate_inputs(argv):
         exit(1)
 
 
-def predict_images(images, network):
+def predict_images(images, network, filename):
     def run_network(X):
         probabilities = network.call(X.reshape(1, 784))
         return np.argmax(probabilities)
 
     images = np.asarray(images)
     labels = np.apply_along_axis(run_network, 1, images)
-    print(labels)
+    dp.write_array_to_file(labels, filename, "%d")
 
 
-def read_images(argv):
+def read_images(directory):
     image_list = []
-    for filename in glob.glob(argv[2] + '*', recursive=True):
+    for filename in glob.glob(directory + '*', recursive=True):
         try:
             im = dp.process_image(Image.open(filename))
             im = im.reshape(-1)
@@ -47,17 +47,18 @@ def main(argv):
     """
     validate_inputs(argv)
 
-    cached_weights = dp.read_weights_from_file("model_weights/weights.txt")
-    cached_bias = dp.read_weights_from_file("model_weights/bias.txt")
+    cached_weights = dp.read_weights_from_file(WEIGHTS_PATH)
+    cached_bias = dp.read_weights_from_file(BIAS_PATH)
     network = model.SingleLayerModel(cached_weights, cached_bias)
 
     # Mode for reading images from directory
     if int(argv[1]) == 1:
-        image_list = read_images(argv)
+        directory, filepath = argv[2], argv[3]
+
+        image_list = read_images(directory)
 
         if len(image_list) > 0:
-            plot_mnist_image(image_list[0])
-            predict_images(image_list, network)
+            predict_images(image_list, network, filepath)
         else:
             print("ERROR: No valid images in given directory")
             exit(1)
