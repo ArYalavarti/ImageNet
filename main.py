@@ -1,13 +1,9 @@
-import sys
 import glob
-import numpy as np
-from PIL import Image
 
-import data_processing as dp
-import util.util as util
+from util import util as dp
 
 from neural_net import model
-from canvas import init_canvas, listen
+from canvas import *
 from util.constants import *
 
 
@@ -38,7 +34,7 @@ def main(argv):
     Main function to invoke ImageNet.
     :param argv: type [<input directory>, <output_file_name>]
     """
-    util.validate_inputs(argv)
+    dp.validate_inputs(argv)
 
     cached_weights = dp.read_weights_from_file(WEIGHTS_PATH)
     cached_bias = dp.read_weights_from_file(BIAS_PATH)

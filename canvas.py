@@ -1,19 +1,21 @@
+import io
 from tkinter import *
 from util.constants import *
 from skimage.transform import resize
 from matplotlib import pyplot as plt
-import util.util as util
+from PIL import Image, ImageTk, ImageGrab
+from util import util as dp
 import numpy as np
 
 
-def predict_image(image_data, network):
-    image_resized = np.flip(
-        np.rot90(resize(image_data, (IMAGE_SIZE, IMAGE_SIZE))),
-        axis=0)
-    util.plot_mnist_image(image_resized)
+def predict_image(ps_image, network):
+    im = dp.process_image(ps_image)
+    dp.plot_mnist_image(im)
 
-    probabilities = network.call(image_resized.reshape((1, IMAGE_SIZE * IMAGE_SIZE)))
-    return np.argmax(probabilities)
+    # probabilities = network.call(
+    #     image_resized.reshape((1, IMAGE_SIZE * IMAGE_SIZE)))
+    #
+    # return np.argmax(probabilities)
 
 
 def is_in_range(x, y):
@@ -40,10 +42,13 @@ def listen(window, canvas, network):
             if is_in_range(x+i, y+i) and is_in_range(x-i, y-i):
                 canvas.create_oval(x-i, y-i, x+i, y+i, fill='#000000')
 
-    def process_image(event):
+    def export_postscript(event):
+        ps = canvas.postscript(colormode='color')
+        img = Image.open(io.BytesIO(ps.encode('utf-8')))
         canvas.delete("all")
+        predict_image(img, network)
         print(3)
 
     window.bind('<B1-Motion>', mouse_move)
-    window.bind('<Return>', process_image)
+    window.bind('<Return>', export_postscript)
     window.mainloop()
