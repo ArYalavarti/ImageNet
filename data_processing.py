@@ -3,7 +3,7 @@ from resizeimage import resizeimage
 from util.image_util import *
 
 
-def write_weights_to_file(weights: np.ndarray, filename: str):
+def write_array_to_file(weights: np.ndarray, filename: str):
     np.savetxt(filename, weights)
 
 
@@ -31,5 +31,7 @@ def process_image(image: Image):
     X = invert_image(X, EDIT_SIZE)
     center_of_mass = get_center_of_mass(X)
 
-    newImage.paste(cover, np.subtract(14, center_of_mass).tolist())
+    image_offset = np.subtract(14, center_of_mass).tolist()
+
+    newImage.paste(cover, image_offset)
     return invert_image(np.array(list(newImage.getdata())), IMAGE_SIZE)
