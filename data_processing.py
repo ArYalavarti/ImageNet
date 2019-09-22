@@ -1,6 +1,6 @@
 from PIL import Image
 from resizeimage import resizeimage
-from util.image_util import *
+from util.util import *
 
 
 def write_array_to_file(weights: np.ndarray, filename: str, fmt: str):

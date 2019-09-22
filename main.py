@@ -1,21 +1,14 @@
-from neural_net import model
-import data_processing as dp
-from util.constants import *
-from matplotlib import pyplot as plt
-from util.image_util import plot_mnist_image
 import sys
-from PIL import Image
 import glob
-
 import numpy as np
+from PIL import Image
 
+import data_processing as dp
+import util.util as util
 
-def validate_inputs(argv):
-    if len(argv) != 2 and len(argv) != 4:
-        print("ERROR: Incorrect number of arguments.")
-        print("Usage: python3 main.py <type> [<output file> <number of rows> "
-              "<number of columns>]")
-        exit(1)
+from neural_net import model
+from canvas import init_canvas, listen
+from util.constants import *
 
 
 def predict_images(images, network, filename):
@@ -45,16 +38,15 @@ def main(argv):
     Main function to invoke ImageNet.
     :param argv: type [<input directory>, <output_file_name>]
     """
-    validate_inputs(argv)
+    util.validate_inputs(argv)
 
     cached_weights = dp.read_weights_from_file(WEIGHTS_PATH)
     cached_bias = dp.read_weights_from_file(BIAS_PATH)
     network = model.SingleLayerModel(cached_weights, cached_bias)
 
-    # Mode for reading images from directory
+    # 1 for reading images from directory 0 for starting GUI to draw images
     if int(argv[1]) == 1:
         directory, filepath = argv[2], argv[3]
-
         image_list = read_images(directory)
 
         if len(image_list) > 0:
@@ -62,9 +54,9 @@ def main(argv):
         else:
             print("ERROR: No valid images in given directory")
             exit(1)
-    # Mode for starting GUI to draw images
     elif int(argv[1]) == 0:
-        pass
+        window, canvas = init_canvas()
+        listen(window, canvas, network)
     else:
         print("ERROR: Invalid type")
         exit(1)
