@@ -1,20 +1,21 @@
 import io
 from tkinter import *
 
+import numpy as np
 from PIL import Image
 
-from util import util as dp
+import util.image_tools as imt
 from util.constants import *
 
 
 def predict_image(ps_image, network):
-    im = dp.process_image(ps_image)
-    dp.plot_mnist_image(im)
+    im = imt.process_image(ps_image)
+    imt.plot_mnist_image(im)
 
-    # probabilities = network.call(
-    #     image_resized.reshape((1, IMAGE_SIZE * IMAGE_SIZE)))
-    #
-    # return np.argmax(probabilities)
+    probabilities = network.call(
+        im.reshape((1, IMAGE_SIZE * IMAGE_SIZE)))
+
+    return np.argmax(probabilities)
 
 
 def is_in_range(x, y):

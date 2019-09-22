@@ -2,6 +2,8 @@ import glob
 
 from canvas import *
 from neural_net import model
+from util import image_tools as imt
+from util import io as io
 from util.constants import *
 
 
@@ -12,14 +14,14 @@ def predict_images(images, network, filename):
 
     images = np.asarray(images)
     labels = np.apply_along_axis(run_network, 1, images)
-    dp.write_array_to_file(labels, filename, "%d")
+    io.write_array_to_file(labels, filename, "%d")
 
 
 def read_images(directory):
     image_list = []
     for filename in glob.glob(directory + '*', recursive=True):
         try:
-            im = dp.process_image(Image.open(filename))
+            im = imt.process_image(Image.open(filename))
             im = im.reshape(-1)
             image_list.append(im)
         except OSError:
@@ -32,10 +34,10 @@ def main(argv):
     Main function to invoke ImageNet.
     :param argv: type [<input directory>, <output_file_name>]
     """
-    dp.validate_inputs(argv)
+    io.validate_inputs(argv)
 
-    cached_weights = dp.read_weights_from_file(WEIGHTS_PATH)
-    cached_bias = dp.read_weights_from_file(BIAS_PATH)
+    cached_weights = io.read_weights_from_file(WEIGHTS_PATH)
+    cached_bias = io.read_weights_from_file(BIAS_PATH)
     network = model.SingleLayerModel(cached_weights, cached_bias)
 
     # 1 for reading images from directory 0 for starting GUI to draw images
