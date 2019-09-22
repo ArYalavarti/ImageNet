@@ -14,7 +14,7 @@ def plot_mnist_image(img):
     pixels = np.array(img, dtype='float32')
     pixels = pixels.reshape((IMAGE_SIZE, IMAGE_SIZE))
 
-    plt.imshow(pixels, cmap='Greys_r')
+    plt.imshow(pixels, cmap='Blues')
     plt.show()
 
 
@@ -24,6 +24,7 @@ def trim_whitespace(image: Image):
     bbox = diff.getbbox()
     if bbox:
         return image.crop(bbox)
+
 
 def get_center_of_mass(data):
     x_sum = 0

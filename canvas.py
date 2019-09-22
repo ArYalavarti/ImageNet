@@ -46,8 +46,8 @@ def listen(window, canvas, network):
         ps = canvas.postscript(colormode='color')
         img = Image.open(io.BytesIO(ps.encode('utf-8')))
         canvas.delete("all")
-        predict_image(img, network)
-        print(3)
+        predicted_val = predict_image(img, network)
+        print(predicted_val)
 
     window.bind('<B1-Motion>', mouse_move)
     window.bind('<Return>', export_postscript)
