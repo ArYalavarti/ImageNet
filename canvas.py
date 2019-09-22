@@ -1,11 +1,10 @@
 import io
 from tkinter import *
-from util.constants import *
-from skimage.transform import resize
-from matplotlib import pyplot as plt
-from PIL import Image, ImageTk, ImageGrab
+
+from PIL import Image
+
 from util import util as dp
-import numpy as np
+from util.constants import *
 
 
 def predict_image(ps_image, network):

@@ -1,10 +1,9 @@
-import io
-
 import numpy as np
-from matplotlib import pyplot as plt
-from util.constants import *
 from PIL import Image, ImageChops
+from matplotlib import pyplot as plt
 from resizeimage import resizeimage
+
+from util.constants import *
 
 
 def invert_image(img: Image, size):

@@ -1,9 +1,7 @@
 import glob
 
-from util import util as dp
-
-from neural_net import model
 from canvas import *
+from neural_net import model
 from util.constants import *
 
 
