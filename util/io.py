@@ -4,8 +4,7 @@ import numpy as np
 def validate_inputs(argv):
     if len(argv) != 2 and len(argv) != 4:
         print("ERROR: Incorrect number of arguments.")
-        print("Usage: python3 main.py <type> [<output file> <number of rows> "
-              "<number of columns>]")
+        print("Usage: python3 main.py <mode> [<image directory> <output file>]")
         exit(1)
 
 
