@@ -13,7 +13,7 @@ def predict_image(ps_image, network):
     imt.plot_mnist_image(im)
 
     probabilities = network.call(
-        im.reshape((1, IMAGE_SIZE * IMAGE_SIZE)))
+        im.reshape((1, IMAGE_SIZE, IMAGE_SIZE, 1)))
 
     return np.argmax(probabilities)
 
