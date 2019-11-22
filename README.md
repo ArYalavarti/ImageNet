@@ -1,5 +1,5 @@
 # ImageNet
-Single layer handwriting digit recognition neural network
+ConvNet handwriting digit recognition neural network + GUI trained on the MNIST digit database 
 
 ## Build/Run Specifications
 
