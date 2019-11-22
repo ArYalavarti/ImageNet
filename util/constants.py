@@ -4,4 +4,4 @@ WEIGHTS_PATH = "model_weights/weights.txt"
 BIAS_PATH = "model_weights/bias.txt"
 CANVAS_WIDTH = 400
 CANVAS_HEIGHT = 400
-MOUSE_SIZE = 8
+MOUSE_SIZE = 5
